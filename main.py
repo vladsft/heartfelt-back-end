@@ -4,6 +4,11 @@ from fastapi import FastAPI
 from vocode.streaming.models.agent import ChatGPTAgentConfig
 from vocode.streaming.models.synthesizer import AzureSynthesizerConfig
 from vocode.streaming.synthesizer.azure_synthesizer import AzureSynthesizer
+from vocode.streaming.models.synthesizer import ElevenLabsSynthesizerConfig
+from vocode.streaming.synthesizer.eleven_labs_synthesizer import ElevenLabsSynthesizer
+from vocode.streaming.models.synthesizer import PlayHtSynthesizerConfig
+from vocode.streaming.synthesizer.play_ht_synthesizer import PlayHtSynthesizer
+
 
 from vocode.streaming.agent.chat_gpt_agent import ChatGPTAgent
 from vocode.streaming.client_backend.conversation import ConversationRouter
@@ -28,9 +33,9 @@ conversation_router = ConversationRouter(
             prompt_preamble=text,
         )
     ),
-    synthesizer_thunk=lambda output_audio_config: AzureSynthesizer(
-        AzureSynthesizerConfig.from_output_audio_config(
-            output_audio_config, voice_name="en-US-SteffanNeural"
+    synthesizer_thunk=lambda output_audio_config: ElevenLabsSynthesizer(
+         ElevenLabsSynthesizerConfig.from_output_audio_config(
+            output_audio_config, voice_id="pMsXgVXv3BLzUgSXRplE"
         )
     ),
     logger=logger,
