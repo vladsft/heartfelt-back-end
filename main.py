@@ -14,11 +14,28 @@ from vocode.streaming.agent.chat_gpt_agent import ChatGPTAgent
 from vocode.streaming.client_backend.conversation import ConversationRouter
 from vocode.streaming.models.message import BaseMessage
 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = FastAPI(docs_url=None)
+
+origins = [
+    "https://heartfelt-ai.vercel.app/",  # Replace with your frontend domain
+    "http://localhost:3000",  # For local development
+    # Add any other domains or subdomains you want to allow
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
