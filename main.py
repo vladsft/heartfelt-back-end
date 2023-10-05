@@ -23,20 +23,6 @@ load_dotenv()
 
 app = FastAPI(docs_url=None)
 
-origins = [
-    "https://heartfelt-ai.vercel.app/",  # Replace with your frontend domain
-    "http://localhost:3000",  # For local development
-    # Add any other domains or subdomains you want to allow
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -51,7 +37,7 @@ conversation_router = ConversationRouter(
         )
     ),
     synthesizer_thunk=lambda output_audio_config: ElevenLabsSynthesizer(
-         ElevenLabsSynthesizerConfig.from_output_audio_config(
+        ElevenLabsSynthesizerConfig.from_output_audio_config(
             output_audio_config, voice_id="pMsXgVXv3BLzUgSXRplE"
         )
     ),
